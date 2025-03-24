@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>致王东阳宝宝</title>
+    <style>
+        .snowflake {
+            position: absolute;
+            color: #ffffff;
+            font-size: 20px;
+            animation: snowing linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        @keyframes snowing {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffebee;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .heart {
+            font-size: 60px;
+            color: #e91e63;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .question {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #yes {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        #no {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart">❤️</div>
+    <div class="question">我爱你呀～我们能在一起吗？</div>
+    
+    <div class="buttons">
+        <button id="yes">是</button>
+        <button id="no">否</button>
+    </div>
+
+    <script>
+        document.getElementById('yes').addEventListener('click', function() {
+            window.location.href = 'love_page.html';
+        });
+        
+        let noClickCount = 0;
+        document.getElementById('no').addEventListener('click', function() {
+            const noBtn = document.getElementById('no');
+            const yesBtn = document.getElementById('yes');
+            
+            noClickCount++;
+            
+            // Make "否" smaller and "是" bigger
+            const shrinkFactor = 1 - (0.2 * noClickCount);
+            const growFactor = 1 + (0.2 * noClickCount);
+            
+            noBtn.style.transform = `scale(${Math.max(shrinkFactor, 0.5)})`;
+            noBtn.style.padding = `${Math.max(12 - (4 * noClickCount), 4)}px ${Math.max(30 - (10 * noClickCount), 10)}px`;
+            yesBtn.style.transform = `scale(${growFactor})`;
+            yesBtn.style.padding = `${12 + (4 * noClickCount)}px ${30 + (10 * noClickCount)}px`;
+            
+            // Remove "否" button after 4 clicks
+            if (noClickCount >= 4) {
+                noBtn.style.display = 'none';
+            }
+        });
+    </script>
+    
+    <div class="music-player">
+        <audio id="bgMusic" loop>
+            <source src="https://music.163.com/song/media/outer/url?id=1901371647.mp3" type="audio/mpeg">
+        </audio>
+        <div class="player-controls">
+            <button id="playBtn">播放</button>
+            <span>有你在 - 王俊凯</span>
+        </div>
+    </div>
+    <style>
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+        }
+        #playBtn {
+            background: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        const music = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+        
+        // Auto play music (may be blocked by browser)
+        music.play().catch(e => console.log('Auto-play prevented:', e));
+        
+        playBtn.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                playBtn.textContent = '暂停';
+            } else {
+                music.pause();
+                playBtn.textContent = '播放';
+            }
+        });
+    </script>
+    
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄️';
+            snowflake.style.left = `${Math.random() * 100}vw`;
+            snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = `${Math.random() * 20 + 10}px`;
+            
+            document.body.appendChild(snowflake);
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 10000);
+        }
+        
+        setInterval(createSnowflake, 300);
+    </script>
+</body>
+</html>

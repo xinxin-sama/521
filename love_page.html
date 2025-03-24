@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我爱你啊，我的宝宝</title>
+    <style>
+        .snowflake {
+            position: absolute;
+            color: #ffffff;
+            font-size: 20px;
+            animation: snowing linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        @keyframes snowing {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffebee;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            color: #e91e63;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .falling-element {
+            position: absolute;
+            color: #e91e63;
+            font-size: 20px;
+            animation: falling linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes falling {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="message">我爱你啊，我的宝宝</div>
+
+    <script>
+        const languages = [
+            "我爱你", "I love you", "Je t'aime", "Ich liebe dich", "Ti amo", 
+            "Te quiero", "Eu te amo", "Я тебя люблю", "愛してる", "사랑해",
+            "ฉันรักเธอ", "Tôi yêu bạn", "Mahal kita", "أحبك", "אני אוהב אותך",
+            "Σ'αγαπώ", "Ik hou van jou", "Jag älskar dig", "Kocham cię", "Szeretlek",
+            "Miluji tě", "Elsker dig", "Jeg elsker dig", "Mina armastan sind", "Rakastan sinua",
+            "Te iubesc", "Ljubim te", "Volim te", "愛你", "මම ඔයාට ආදරෙයි",
+            "Maite zaitut", "Me do wo", "Nakupenda", "Ndinokuda", "Ke a go rata",
+            "Ngiyakuthanda", "Ndimakukonda", "Ngiyakutsandza", "Ngiyakuthanda", "Ke a leboha",
+            "Ke a go rata", "Ke a leboha", "Ke a go rata", "Ke a leboha", "Ke a go rata",
+            "Ke a leboha", "Ke a go rata", "Ke a leboha", "Ke a go rata", "Ke a leboha",
+            "Ke a go rata", "Ke a leboha", "Ke a go rata", "Ke a leboha", "Ke a go rata"
+        ];
+
+        function createFallingElement() {
+            const element = document.createElement('div');
+            element.className = 'falling-element';
+            
+            // Alternate between hearts and love phrases
+            if (Math.random() > 0.5) {
+                element.innerHTML = '❤️';
+                element.style.fontSize = `${Math.random() * 20 + 10}px`;
+            } else {
+                element.textContent = languages[Math.floor(Math.random() * languages.length)];
+            }
+            
+            element.style.left = `${Math.random() * 100}vw`;
+            element.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            
+            document.body.appendChild(element);
+            
+            // Remove element after animation completes
+            setTimeout(() => {
+                element.remove();
+            }, 5000);
+        }
+        
+        // Create falling elements every 300ms
+        setInterval(createFallingElement, 300);
+    </script>
+    
+    <div class="music-player">
+        <audio id="bgMusic" loop>
+            <source src="https://music.163.com/song/media/outer/url?id=1901371647.mp3" type="audio/mpeg">
+        </audio>
+        <div class="player-controls">
+            <button id="playBtn">播放</button>
+            <span>有你在 - 王俊凯</span>
+        </div>
+    </div>
+    <style>
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+        }
+        #playBtn {
+            background: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        const music = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+        
+        // Auto play music (may be blocked by browser)
+        music.play().catch(e => console.log('Auto-play prevented:', e));
+        
+        playBtn.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                playBtn.textContent = '暂停';
+            } else {
+                music.pause();
+                playBtn.textContent = '播放';
+            }
+        });
+    </script>
+    
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.innerHTML = '❄️';
+            snowflake.style.left = `${Math.random() * 100}vw`;
+            snowflake.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = `${Math.random() * 20 + 10}px`;
+            
+            document.body.appendChild(snowflake);
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 10000);
+        }
+        
+        setInterval(createSnowflake, 300);
+    </script>
+</body>
+</html>
+<!-- 我一直都会爱着你，我的宝宝，留给王东阳宝宝的彩蛋 -->
